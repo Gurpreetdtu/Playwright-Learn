@@ -1,3 +1,4 @@
+
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -8,8 +9,7 @@ export default defineConfig({
 
     use: {
         browserName: 'chromium',
-        channel: 'msedge',
-        headless: false,
+        headless: true,
         baseURL: 'https://ecommerce-playground.lambdatest.io'
     },
 
