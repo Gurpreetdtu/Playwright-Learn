@@ -6,32 +6,50 @@ export class RegisterPage {
     constructor(private page: Page) {}
 
     // Locators
-    firstname = this.page.locator('#input-firstname');
-    lastname = this.page.locator('#input-lastname');
-    email = this.page.locator('#input-email');
-    password = this.page.locator('#input-password');
+    private firstName = this.page.locator('#input-firstname');
+    private lastName = this.page.locator('#input-lastname');
+    private email = this.page.locator('#input-email');
+    private password = this.page.locator('#input-password');
+    private privacyPolicy = this.page.locator('input[name="agree"]');
+    private continueButton = this.page.getByRole('button', { name: 'Continue' });
 
-    btnContinue = this.page.getByRole('button', { name: 'Continue' });
+    // Open register page
+    async open() {
+        await this.page.goto('/index.php?route=account/register');
+    }
 
-    // Methods
-   async open() {
-    await this.page.goto('/index.php?route=account/register');
-}
+    async enterFirstName(name: string) {
+        await this.firstName.fill(name);
+    }
 
-async enterFirstName(name: string) {
-    await this.firstname.fill(name);
-}
+    async enterLastName(name: string) {
+        await this.lastName.fill(name);
+    }
 
-async enterLastName(name: string) {
-    await this.lastname.fill(name);
-}
+    async enterEmail(email: string) {
+        await this.email.fill(email);
+    }
 
-async enterEmail(email: string) {
-    await this.email.fill(email);
-}
+    async enterPassword(password: string) {
+        await this.password.fill(password);
+    }
 
-async enterPassword(password: string) {
-    await this.password.fill(password);
-}
+    async acceptPrivacyPolicy() {
+        await this.privacyPolicy.check();
+    }
 
+    async clickContinue() {
+        await this.continueButton.click();
+    }
+
+    async register(firstName: string, lastName: string,
+                   email: string, password: string) {
+
+        await this.enterFirstName(firstName);
+        await this.enterLastName(lastName);
+        await this.enterEmail(email);
+        await this.enterPassword(password);
+        await this.acceptPrivacyPolicy();
+        await this.clickContinue();
+    }
 }
